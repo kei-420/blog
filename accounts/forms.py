@@ -1,5 +1,6 @@
 from django import forms
 from .models import UserManager
+from blog_app.models import Post
 from django.contrib.auth.forms import UsernameField
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -106,5 +107,5 @@ class LogInForm(forms.Form):
         self.user_request_to_login = requesting_user
 
     def get_login_user(self):
-        """Get user logged in"""
+        """ユーザ名、データベースIDなどを表す引数 user_id をとり、対応するUserオブジェクトを返す。"""
         return self.user_request_to_login

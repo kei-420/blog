@@ -1,32 +1,36 @@
 from django.db import models
+from accounts.models import UserManager
 
 
 class Blog(models.Model):
     class Meta:
         db_table = 'blog'
 
-    blog_name = models.CharField(
-        max_length=255,
-    )
+    user = models.ForeignKey(UserManager, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.blog_name)
+        return str(self.user)
 
 
-class Comment(models.Model):
+class Post(models.Model):
     class Meta:
-        db_table = 'comment'
+        db_table = 'Post'
 
-    title = models.CharField(
-        max_length=255,
+    blog = models.OneToOneField(
+        Blog,
+        on_delete=models.PROTECT,
+    )
+    title = models.CharField(max_length=100)
+    image = models.ImageField(
+        upload_to='media/',
         blank=True,
     )
-    text = models.TextField(
-        blank=True,
-    )
+    body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.text)
+        return str(self.blog) + '|' + str(self.title)
+
+

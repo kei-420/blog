@@ -3,6 +3,7 @@ from django.views import View
 from .forms import SignUpForm, LogInForm
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from blog_app.models import Blog, Post
 
 
 class SignUpView(View):
@@ -16,8 +17,23 @@ class SignUpView(View):
             return render(request, 'accounts/signup.html', {'form': form})
         user_info_save = form.save(commit=True)
 
+        create_user_blog = Blog()
+        create_user_blog.user = user_info_save
+        create_user_blog.save()
+
+        post = Post(blog=create_user_blog)
+        post.save()
+
         auth_login(request, user_info_save)
         return redirect('accounts:login')
+
+
+# class ConfirmUserInfo(View):
+#     def get(self, request, *args, **kwargs):
+#         form = SignUpForm()
+#         if not form.is_valid():
+#             return render(request, 'accounts/signup.html', {'form': form})
+#         return render(request, 'accounts/confirm_user_info.html', {'form': form})
 
 
 class LogInView(View):
@@ -30,7 +46,7 @@ class LogInView(View):
         if not form.is_valid():
             return render(request, 'accounts/login.html', {'form': form})
 
-        # -> get_user() > ユーザ名、データベースIDなどを表す引数 user_id をとり、対応するUserオブジェクトを返す。
+        # -> get_login_user() >
         login_user = form.get_login_user()
         auth_login(request, login_user)
 

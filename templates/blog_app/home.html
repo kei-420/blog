@@ -3,6 +3,17 @@
 {% block content %}
 <div align="center">
     <h1>This is the HOME VIEW.</h1>
-    <a class="btn btn-primary" href="{% url 'accounts:logout' %}">Log out</a>
+    <h2>Welcome, 「{{ user }}」</h2>
 </div>
+<body>
+    <h3>最新の投稿</h3>
+    {% for post in post.all %}
+        {{ post.title }} |
+        {{ post.created_at }}
+        <br/><br/>
+    {% endfor %}
+</body>
+    <div align="center">
+        <a class="btn btn-primary" href="{% url 'accounts:logout' %}">Log out</a>
+     </div>
 {% endblock %}
