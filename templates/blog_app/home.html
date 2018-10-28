@@ -7,13 +7,14 @@
 </div>
 <body>
     <h3>最新の投稿</h3>
-    {% for post in post.all %}
-        {{ post.title }} |
-        {{ post.created_at }}
+    {% for data in show_data.all %}
+        {{ data.title }} |
+        {{ data.created_at }}
         <br/><br/>
     {% endfor %}
 </body>
     <div align="center">
+        <a class="btn btn-primary" href="{% url 'blog_app:post' %}">Post</a>
         <a class="btn btn-primary" href="{% url 'accounts:logout' %}">Log out</a>
      </div>
 {% endblock %}

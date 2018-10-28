@@ -3,7 +3,7 @@ from django.views import View
 from .forms import SignUpForm, LogInForm
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from blog_app.models import Blog, Post
+from blog_app.models import Post
 
 
 class SignUpView(View):
@@ -17,12 +17,9 @@ class SignUpView(View):
             return render(request, 'accounts/signup.html', {'form': form})
         user_info_save = form.save(commit=True)
 
-        create_user_blog = Blog()
-        create_user_blog.user = user_info_save
-        create_user_blog.save()
-
-        post = Post(blog=create_user_blog)
-        post.save()
+        # create_user_blog = Post()
+        # create_user_blog.user = user_info_save
+        # create_user_blog.save()
 
         auth_login(request, user_info_save)
         return redirect('accounts:login')
@@ -46,7 +43,6 @@ class LogInView(View):
         if not form.is_valid():
             return render(request, 'accounts/login.html', {'form': form})
 
-        # -> get_login_user() >
         login_user = form.get_login_user()
         auth_login(request, login_user)
 
