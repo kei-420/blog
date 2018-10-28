@@ -2,16 +2,25 @@
 
 {% block content %}
 <div align="center">
-    <h1>This is the HOME VIEW.</h1>
     <h2>Welcome, 「{{ user }}」</h2>
 </div>
 <body>
     <h3>最新の投稿</h3>
+    <table border="3" class="container">
+       <tr>
+           <th>タイトル</th>
+           <th>作成日付</th>
+           <th>詳細</th>
+       </tr>
     {% for data in show_data.all %}
-        {{ data.title }} |
-        {{ data.created_at }}
-        <br/><br/>
+        <tr>
+           <td>{{ data.title }}</td>
+            <td>{{ data.created_at }}</td>
+            <td><a href="{% url 'blog_app:post_detail' data.pk %}">続きを読む</a></td>
+{#			<a href="{% url 'blog_app:post_detail' post.pk %}">続きを読む</a>#}
+		</tr>
     {% endfor %}
+    </table>
 </body>
     <div align="center">
         <a class="btn btn-primary" href="{% url 'blog_app:post' %}">Post</a>

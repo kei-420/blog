@@ -40,3 +40,8 @@ class PostView(LoginRequiredMixin, generic.FormView):
         form.save(commit=True)
 
         return redirect(reverse('blog_app:home'))
+
+
+class PostDetailView(LoginRequiredMixin, generic.DetailView):
+    queryset = Post.objects.all()
+

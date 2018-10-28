@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>This is Detail View</h1>
+    <div align="center">
+<p>タイトル：{{ object.title}}</p>
+<p>画像：{{ object.image }}</p>
+<p>本文：{{ object.body }}</p>
+    <a class="btn btn-primary" href="{% url 'blog_app:home' %}">戻る</a>
+    </div>
+{% endblock %}
